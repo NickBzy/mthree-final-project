@@ -21,7 +21,9 @@ def index():
 
 @app.route("/restaurants")
 def restaurants():
-    return render_template('restaurants.html')
+    cursor.execute("select * from restaurants")
+    restaurant=cursor.fetchall()
+    return render_template('restaurants.html', restaurant=restaurant)
 
 @app.route("/dishes")
 def dishes():

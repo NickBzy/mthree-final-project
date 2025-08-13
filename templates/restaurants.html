@@ -21,6 +21,13 @@
             </ul>
         </nav>  
         <main>
+            <ul>
+                {% for resto in restaurant %}
+                <li>
+                    {{resto[1]}}
+                </li>
+                {% endfor %}
+            </ul>
 
         </main>
          <footer>
