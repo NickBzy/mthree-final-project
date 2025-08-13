@@ -19,20 +19,17 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/orders")
-def orders():
-    pass
+@app.route("/restaurants")
+def restaurants():
+    return render_template('restaurants.html')
 
-@app.route("/menu")
-def menu():
-    pass
-
-@app.route("/tables")
-def tables():
-    pass
+@app.route("/dishes")
+def dishes():
+    return render_template('dishes.html')
 
 @app.route("/reservations")
-def reservations():
-    pass
+def reserve():
+    return render_template('reservations.html')
+
 
 app.run("0.0.0.0", port=5000, debug=True)

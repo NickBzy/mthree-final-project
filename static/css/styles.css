@@ -1,0 +1,258 @@
+/* PROJECT VARIABLES */
+:root {
+  --black: rgb(15, 15, 15);
+  --white: rgb(255, 251, 235);
+  --grey: rgb(54, 54, 47);
+  --light-grey: rgb(170, 170, 165);
+  --green: #4CAF50;
+  --dark-green: #206622;
+  --purple: #747bff;
+  --gold: #f5c842;
+  --coral: #ff6b6b;
+  --light-blue: #61dafb;
+  --dark-blue: #1c80b6;
+  --msg-blue: #007aff;
+  --msg-green: #65c466;
+  --msg-grey: #8e8e93;
+}
+
+/* FONTS */
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins-Medium.woff2") format("woff2"),
+    url("../fonts/Poppins-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins-Black.woff2") format("woff2"),
+    url("../fonts/Poppins-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins-ExtraBold.woff2") format("woff2"),
+    url("../fonts/Poppins-ExtraBold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS RESET */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+#root,
+#__next {
+  isolation: isolate;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* CUSTOM CSS */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Poppins, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+}
+
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* NAVBAR */
+nav {
+    display: flex;
+    padding: 20px 30px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--grey);
+}
+
+nav h2 {
+    color: var(--green);
+    font-size: 2.5rem;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    font-size: 1.2rem;
+}
+
+nav a {
+    color: var(--grey);
+}
+
+nav a:hover {
+    color: var(--green);
+}
+
+button {
+    border-radius: 12px;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: var(--green);
+    color: white;
+}
+
+button:hover {
+    background-color: var(--white);
+    border: 1px solid var(--green);
+    color: var(--green);
+}
+
+/* MAIN */
+/* searchbar */
+main {
+    flex: 1;
+}
+
+.search-bar {
+    padding: 60px 30px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.search-full {
+    display: flex;
+    padding: 8px;
+    border: 1px solid var(--light-grey);
+    border-radius: 4px;
+}
+
+.search-full svg {
+    width: 24px;
+}
+
+.search-full input {
+    border: none;
+    outline: none;
+}
+
+.search-full input:hover {
+    border: none;
+}
+
+/* FEATURED RESTAURANTS */
+.featured-restaurants, .trending-dishes {
+    padding: 20px 30px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.headline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 40px;
+    padding-bottom: 20px;
+}
+
+.headline a {
+    color: var(--green);
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.headline a:hover {
+    color: var(--dark-green);
+}
+
+
+/* RESTAURANT ITEM */
+.restaurant-item, .dish-item {
+    border: 0.5px solid var(--light-grey);
+    border-radius: 16px;
+    transition: all ease-in-out 0.2s;
+    cursor: pointer;
+}
+
+.restaurant-item:hover, .dish-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.restaurant-item-bottom, .dish-item-bottom {
+    padding: 10px;
+}
+
+
+/* FOOTER */
+footer {
+    background-color: var(--green);
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    color: white;
+    font-size: 1.2rem;
+}
