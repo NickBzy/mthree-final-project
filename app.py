@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, redirect
-import mysql
+import mysql.connector
 import os
 
 # Change to environment variables later
@@ -28,7 +28,7 @@ def restaurants():
 
 @app.route("/dishes")
 def dishes():
-    cursor.execute("SELECT * FROM restaurants")
+    cursor.execute("SELECT * FROM dish")
     dishes=cursor.fetchall()
     return render_template('dishes.html', dishes=dishes)
 
@@ -53,18 +53,16 @@ def add_menu_item():
             return render_template("add_dishes.html")
         
         cursor.execute("""
-            INSERT INTO menu_items (name, description, price, category, is_available, menu)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, (name, description, price, category, is_available, menu))
-        mysql.connection.commit()
+            INSERT INTO dish (name, description, price, category)
+            VALUES (%s, %s, %s, %s)
+        """, (name, description, price, category))
         cursor.close()
-        flash('Menu item added successfully!', 'success')
         return redirect("/")
     
     return render_template('add_dishes.html')
 @app.route("/dishes/delete/<int:item_id>")
 def remove_menu_item(item_id):
-    cursor.execute("SELECT id FROM dish WHERE id = %s", (item_id,))
+    cursor.execute("""SELECT id FROM dish WHERE id = %s""", (item_id,))
     if not cursor.fetchone():
             flash('Dish not found', 'danger')
             return redirect("/")

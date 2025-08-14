@@ -1,6 +1,6 @@
 {% block content %}
 <h2>Add Menu Item</h2>
-<form method="POST" action="{{ url_for('main.add_menu_item') }}">
+<form method="POST" action="{{ url_for('add_menu_item') }}">
     <div class="mb-3">
         <label for="name" class="form-label">Item Name*</label>
         <input type="text" class="form-control" id="name" name="name" required>
@@ -26,6 +26,6 @@
         <label class="form-check-label" for="is_available">Available</label>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
-    <a href="{{ url_for('main.menu') }}" class="btn btn-secondary">Cancel</a>
+    <a href="{{ url_for('add_menu_item') }}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}

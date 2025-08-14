@@ -15,6 +15,7 @@
                 <li><a href="/restaurants">Restaurants</a></li>
                 <li><a href="/dishes">Dishes</a></li>
                 <li><a href="/reservations">Reserve</a></li>
+                <li><a href="/dishes/add">Add dishes</a></li>
             </ul>
             <ul>
                 <button>Sign in</button>
@@ -24,7 +25,7 @@
             <ul>
                 {% for dish in dishes %}
                 <li>
-                    {{dish[1]}}
+                    {{dish[2]}}
                 </li>
                 {% endfor %}
             </ul>
