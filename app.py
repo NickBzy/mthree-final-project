@@ -27,7 +27,9 @@ def restaurants():
 
 @app.route("/dishes")
 def dishes():
-    return render_template('dishes.html')
+    cursor.execute("select * from restaurants")
+    dishes=cursor.fetchall()
+    return render_template('dishes.html', dishes=dishes)
 
 @app.route("/reservations")
 def reserve():

@@ -21,7 +21,13 @@
             </ul>
         </nav>  
         <main>
-
+            <ul>
+                {% for dish in dishes %}
+                <li>
+                    {{dish[1]}}
+                </li>
+                {% endfor %}
+            </ul>
         </main>
          <footer>
             <p>© 2025 Foodies. All rights reserved.</p>
