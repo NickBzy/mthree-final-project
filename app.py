@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
-import mysql.connector
+from flask import Flask, render_template, request, flash, redirect
+import mysql
 import os
 
 # Change to environment variables later
@@ -22,13 +22,13 @@ def index():
 
 @app.route("/restaurants")
 def restaurants():
-    cursor.execute("select * from restaurants")
+    cursor.execute("SELECT * FROM restaurants")
     restaurant=cursor.fetchall()
     return render_template('restaurants.html', restaurant=restaurant)
 
 @app.route("/dishes")
 def dishes():
-    cursor.execute("select * from restaurants")
+    cursor.execute("SELECT * FROM restaurants")
     dishes=cursor.fetchall()
     return render_template('dishes.html', dishes=dishes)
 
@@ -44,25 +44,33 @@ def add_menu_item():
         
         if not name or not price:
             flash('Name and price are required', 'danger')
-            return redirect(url_for('main.add_menu_item'))
+            return render_template("add_dishes.html")
         
         try:
             price = float(price)
         except ValueError:
             flash('Invalid price format', 'danger')
-            return redirect(url_for('main.add_menu_item'))
+            return render_template("add_dishes.html")
         
-        cursor = mysql.connection.cursor()
         cursor.execute("""
-            INSERT INTO menu_items (name, description, price, category, is_available)
+            INSERT INTO menu_items (name, description, price, category, is_available, menu)
             VALUES (%s, %s, %s, %s, %s, %s)
         """, (name, description, price, category, is_available, menu))
         mysql.connection.commit()
         cursor.close()
         flash('Menu item added successfully!', 'success')
-        return redirect(url_for('main.menu'))
+        return redirect("/")
     
-    return render_template('add_menu_item.html')
+    return render_template('add_dishes.html')
+@app.route("/dishes/delete/<int:item_id>")
+def remove_menu_item(item_id):
+    cursor.execute("SELECT id FROM dish WHERE id = %s", (item_id,))
+    if not cursor.fetchone():
+            flash('Dish not found', 'danger')
+            return redirect("/")
+    cursor.execute("DELETE FROM menu_items WHERE id = %s", (item_id,))
+    flash('Dish deleted successfully', 'success')
+    return redirect("/")
 
 @app.route("/reservations")
 def reserve():
