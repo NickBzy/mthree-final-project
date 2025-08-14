@@ -40,6 +40,7 @@ def add_menu_item():
         price = request.form.get('price')
         category = request.form.get('category')
         is_available = request.form.get('is_available', 'false') == 'true'
+        menu=request.form.get("menu")
         
         if not name or not price:
             flash('Name and price are required', 'danger')
@@ -54,8 +55,8 @@ def add_menu_item():
         cursor = mysql.connection.cursor()
         cursor.execute("""
             INSERT INTO menu_items (name, description, price, category, is_available)
-            VALUES (%s, %s, %s, %s, %s)
-        """, (name, description, price, category, is_available))
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (name, description, price, category, is_available, menu))
         mysql.connection.commit()
         cursor.close()
         flash('Menu item added successfully!', 'success')
