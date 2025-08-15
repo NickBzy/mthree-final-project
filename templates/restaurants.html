@@ -21,30 +21,34 @@
             </ul>
         </nav>  
         <main>
-            <div class="filters">
-                <form method="get" action="/restaurants" id="filterForm">
-                    <label for="cities">Filter by City:</label>
-                    <select name="city" id="cities" multiple>
-                        {% for city in all_cities %}
-                            <option value="{{ city }}" {% if city in selected_cities %}selected{% endif %}>{{ city }}</option>
+            <div class="head-list">
+                <div class="filters">
+                    <form method="get" action="/restaurants" id="filterForm">
+                        <label for="cities">Filter by City:</label>
+                        <select name="city" id="cities" multiple>
+                            {% for city in all_cities %}
+                                <option value="{{ city }}" {% if city in selected_cities %}selected{% endif %}>{{ city }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <input type="hidden" name="order" value="{{ order }}">
+                        <button type="submit">Apply Filters</button>
+                    </form>
+
+                    <!-- Toggle Reservation Order -->
+                    <form method="get" action="/restaurants" style="display:inline;">
+                        {% for city in selected_cities %}
+                            <input type="hidden" name="city" value="{{ city }}">
                         {% endfor %}
-                    </select>
-
-                    <input type="hidden" name="order" value="{{ order }}">
-                    <button type="submit">Apply Filters</button>
-                </form>
-
-                <!-- Toggle Reservation Order -->
-                <form method="get" action="/restaurants" style="display:inline;">
-                    {% for city in selected_cities %}
-                        <input type="hidden" name="city" value="{{ city }}">
-                    {% endfor %}
-                    <input type="hidden" name="order" value="{% if order == 'desc' %}asc{% else %}desc{% endif %}">
-                    <button type="submit">
-                        Sort by Reservations {% if order == 'desc' %}↓{% else %}↑{% endif %}
-                    </button>
-                </form>
+                        <input type="hidden" name="order" value="{% if order == 'desc' %}asc{% else %}desc{% endif %}">
+                        <button type="submit">
+                            Sort by Reservations {% if order == 'desc' %}↓{% else %}↑{% endif %}
+                        </button>
+                    </form>
+                </div>
+                <button class="add">Add Restaurant</button>
             </div>
+            
             
             {% if city %}
             <h2 class="restaurant-header">Restaurants in {{ city }}</h2>
@@ -81,10 +85,78 @@
                     </div>
                 </a>
                     {% endfor %}
-                </div>
-                    
-                
+                </div>  
             </div>
+
+           <div class="add-overlay">
+                <form action="/add_restaurant" method="POST" class="add-restaurant-form">
+                    <h2>Add a New Restaurant</h2>
+
+                    <!-- Restaurant Name -->
+                    <label for="name">Restaurant Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter restaurant name" required>
+
+                    <!-- Cuisine -->
+                    <label for="cuisine">Cuisine:</label>
+                    <input type="text" id="cuisine" name="cuisine" placeholder="e.g. Italian, Sushi, Mexican" required>
+
+                    <!-- Province Dropdown -->
+                    <label for="province">Province:</label>
+                    <select id="province" name="province" required>
+                        <option value="">-- Select Province --</option>
+                        {% for province in provinces %}
+                            <option value="{{ province }}">{{ province }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <!-- City Dropdown -->
+                    <label for="city">City:</label>
+                    <select id="city" name="city" required>
+                        <option value="">-- Select City --</option>
+                    </select>
+
+                    <!-- Submit -->
+                    <button type="submit">Add Restaurant</button>
+                </form>
+            </div>
+
+            <script>
+            document.getElementById("province").addEventListener("change", function() {
+                let province = this.value;
+                let citySelect = document.getElementById("city");
+
+                // Clear current options
+                citySelect.innerHTML = '<option value="">-- Select City --</option>';
+
+                if (province) {
+                    fetch(`/get_cities?province=${encodeURIComponent(province)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(city => {
+                                let option = document.createElement("option");
+                                option.value = city;
+                                option.textContent = city;
+                                citySelect.appendChild(option);
+                            });
+                        });
+                }
+            });
+            document.addEventListener("DOMContentLoaded", () => {
+                const overlay = document.querySelector(".add-overlay");
+                const addBtn = document.querySelector(".add");
+
+                addBtn.addEventListener("click", () => {
+                    overlay.classList.add("active");
+                });
+
+                // Close overlay when clicking outside form
+                overlay.addEventListener("click", (e) => {
+                    if (e.target === overlay) {
+                        overlay.classList.remove("active");
+                    }
+                });
+            });
+            </script>
 
         </main>
          <footer>
