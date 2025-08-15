@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, jsonify
 import mysql.connector
 import os
 
@@ -87,6 +87,9 @@ def restaurants():
 
     restaurant = cursor.fetchall()
 
+    cursor.execute("SELECT DISTINCT province FROM locations ORDER BY province")
+    provinces = [row[0] for row in cursor.fetchall()]
+
     cursor.execute("SELECT DISTINCT city FROM locations ORDER BY city")
     all_cities = [row[0] for row in cursor.fetchall()]
 
@@ -96,8 +99,45 @@ def restaurants():
         selected_cities=cities,
         all_cities=all_cities,
         order=order,
-        city=city
+        city=city,
+        provinces=provinces
     )
+
+@app.route("/add_restaurant", methods=["POST"])
+def add_restaurant():
+    name = request.form.get("name")
+    cuisine = request.form.get("cuisine")
+    province = request.form.get("province")
+    city = request.form.get("city")
+
+    # Get location_id for the chosen city/province
+    cursor.execute("""
+        SELECT location_id FROM locations WHERE province = %s AND city = %s
+    """, (province, city))
+    location_id = cursor.fetchone()
+
+    if location_id:
+        location_id = location_id[0]
+    else:
+        # If not found, insert new location
+        cursor.execute("INSERT INTO locations (province, city) VALUES (%s, %s)", (province, city))
+        location_id = cursor.lastrowid
+
+    # Insert into restaurants table
+    cursor.execute("""
+        INSERT INTO restaurants (name, cuisine, location_id)
+        VALUES (%s, %s, %s)
+    """, (name, cuisine, location_id))
+    conn.commit()
+
+    return redirect("/restaurants")
+
+@app.route("/get_cities")
+def get_cities():
+    province = request.args.get("province")
+    cursor.execute("SELECT DISTINCT city FROM locations WHERE province = %s ORDER BY city", (province,))
+    cities = [row[0] for row in cursor.fetchall()]
+    return jsonify(cities)
 
 
 @app.route("/dishes")

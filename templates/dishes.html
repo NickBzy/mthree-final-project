@@ -22,29 +22,33 @@
             </ul>
         </nav>  
         <main>
-            <div class="filters">
-                <form method="get" action="/dishes" id="filterForm">
-                    <label for="cities">Filter by City:</label>
-                    <select name="city" id="cities" multiple>
-                        {% for city in all_cities %}
-                            <option value="{{ city }}" {% if city in selected_cities %}selected{% endif %}>{{ city }}</option>
+            <div class="head-list">
+                <div class="filters">
+                    <form method="get" action="/dishes" id="filterForm">
+                        <label for="cities">Filter by City:</label>
+                        <select name="city" id="cities" multiple>
+                            {% for city in all_cities %}
+                                <option value="{{ city }}" {% if city in selected_cities %}selected{% endif %}>{{ city }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <input type="hidden" name="order" value="{{ order }}">
+                        <button type="submit">Apply Filters</button>
+                    </form>
+
+                    <form method="get" action="/dishes" style="display:inline;">
+                        {% for city in selected_cities %}
+                            <input type="hidden" name="city" value="{{ city }}">
                         {% endfor %}
-                    </select>
-
-                    <input type="hidden" name="order" value="{{ order }}">
-                    <button type="submit">Apply Filters</button>
-                </form>
-
-                <form method="get" action="/dishes" style="display:inline;">
-                    {% for city in selected_cities %}
-                        <input type="hidden" name="city" value="{{ city }}">
-                    {% endfor %}
-                    <input type="hidden" name="order_by_orders" value="{% if order_by_orders == 'desc' %}asc{% else %}desc{% endif %}">
-                    <button type="submit">
-                        Sort by Orders {% if order_by_orders == 'desc' %}↓{% else %}↑{% endif %}
-                    </button>
-                </form>
+                        <input type="hidden" name="order_by_orders" value="{% if order_by_orders == 'desc' %}asc{% else %}desc{% endif %}">
+                        <button type="submit">
+                            Sort by Orders {% if order_by_orders == 'desc' %}↓{% else %}↑{% endif %}
+                        </button>
+                    </form>
+                </div>
+                <button class="add">Add Dish</button>
             </div>
+            
             {% if city %}
             <h2 class="dishes-header">Dishes in {{ city }}</h2>
             {% else %}
@@ -67,6 +71,31 @@
                     {% endfor %}
                 </div>
                 
+            </div>
+
+            <div class="add-overlay">
+                <form action="/add_restaurant" method="POST" class="add-restaurant-form">
+                    <h2>Add a New Restaurant</h2>
+
+                    <!-- Restaurant Name -->
+                    <label for="name">Restaurant Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter restaurant name" required>
+
+                    <!-- Cuisine -->
+                    <label for="cuisine">Cuisine:</label>
+                    <input type="text" id="cuisine" name="cuisine" placeholder="e.g. Italian, Sushi, Mexican" required>
+
+                    <!-- Province -->
+                    <label for="province">Province:</label>
+                    <input type="text" id="province" name="province" placeholder="Province" required>
+
+                    <!-- City -->
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" placeholder="City" required>
+
+                    <!-- Submit -->
+                    <button type="submit">Add Restaurant</button>
+                </form>
             </div>
 
         </main>
