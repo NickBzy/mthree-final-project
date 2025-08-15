@@ -57,9 +57,11 @@
                         </div>
                     </div> -->
                     {% for restaurant in top_restaurants %}
-                    <a href="{{url_for('resto_dishes', resto_id=restaurant[0])}}"
+                    
                     <div class="restaurant-item">
+                        
                         <div class="restaurant-item-bottom">
+                            <a href="{{url_for('resto_dishes', resto_id=restaurant[0])}}"
                             <h3>{{ restaurant[1] }}</h3>
                             <div class="rating">
                                 <div class="stars">
@@ -80,9 +82,11 @@
                             <div class="restaurant-info">
                                 <p class="cuisine">{{ restaurant[2] }}</p>
                             </div>
+                            </a>
                         </div>
+                        
                     </div>
-                </a>
+                
                     {% endfor %}
                     
                 </div>
