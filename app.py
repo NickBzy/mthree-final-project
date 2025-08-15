@@ -105,9 +105,21 @@ def restaurants():
 
 @app.route("/restaurants/<int:resto_id>")
 def resto_dishes(resto_id):
-    cursor.execute("SELECT * FROM (dish JOIN menu ON dish.menu_id=menu.menu_id) WHERE menu.restaurant_id=%s", (resto_id,))
+    # cursor.execute("SELECT * FROM (dish JOIN menu ON dish.menu_id=menu.menu_id) WHERE menu.restaurant_id=%s", (resto_id,))
+    cursor.execute("""
+        SELECT d.dish_id, d.name, COUNT(oi.order_item_id) AS times_ordered, 
+               r.name, l.city, l.province
+        FROM order_items oi
+        RIGHT JOIN dish d ON oi.dish_id = d.dish_id
+        JOIN menu m ON d.menu_id = m.menu_id
+        JOIN restaurants r ON m.restaurant_id = r.restaurant_id
+        JOIN locations l ON r.location_id = l.location_id
+        WHERE m.restaurant_id=%s
+        GROUP BY d.dish_id;
+    """, (resto_id,))
     dishes=cursor.fetchall()
     return render_template("dishes.html",dishes=dishes, resto_id=resto_id)
+
 @app.route("/add_restaurant", methods=["POST"])
 def add_restaurant():
     name = request.form.get("name")
