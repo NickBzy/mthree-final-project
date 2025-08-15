@@ -21,18 +21,68 @@
             </ul>
         </nav>  
         <main>
+            <div class="filters">
+                <form method="get" action="/restaurants" id="filterForm">
+                    <label for="cities">Filter by City:</label>
+                    <select name="city" id="cities" multiple>
+                        {% for city in all_cities %}
+                            <option value="{{ city }}" {% if city in selected_cities %}selected{% endif %}>{{ city }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="hidden" name="order" value="{{ order }}">
+                    <button type="submit">Apply Filters</button>
+                </form>
+
+                <!-- Toggle Reservation Order -->
+                <form method="get" action="/restaurants" style="display:inline;">
+                    {% for city in selected_cities %}
+                        <input type="hidden" name="city" value="{{ city }}">
+                    {% endfor %}
+                    <input type="hidden" name="order" value="{% if order == 'desc' %}asc{% else %}desc{% endif %}">
+                    <button type="submit">
+                        Sort by Reservations {% if order == 'desc' %}↓{% else %}↑{% endif %}
+                    </button>
+                </form>
+            </div>
+            
             {% if city %}
-            <h2>Restaurants in {{ city }}</h2>
+            <h2 class="restaurant-header">Restaurants in {{ city }}</h2>
             {% else %}
-            <h2>All Restaurants</h2>
+            <h2 class="restaurant-header">All Restaurants</h2>
             {% endif %}
-            <ul>
-                {% for resto in restaurant %}
-                <li>
-                    {{resto[1]}}
-                </li>
-                {% endfor %}
-            </ul>
+            <div class="featured-restaurants">
+                <div class="restaurants-list">
+                    {% for restaurant in restaurant %}
+                    <div class="restaurant-item">
+                        <div class="restaurant-item-list">
+                            <h3>{{ restaurant[1] }}</h3>
+                            <div class="rating">
+                                <div class="stars">
+                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                </div>
+                                <p class="rating-count">0</p>
+                            </div>
+                            <div class="reservations-count">
+                                <p>{{ restaurant[3] }} reservations</p>
+                            </div>
+                            <div class="location">
+                                <p><span>{{ restaurant[5] }}, </span><span>{{ restaurant[4] }}</span></p>
+                            </div>
+                            <div class="restaurant-info">
+                                <p class="cuisine">{{ restaurant[2] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                    
+                
+            </div>
 
         </main>
          <footer>

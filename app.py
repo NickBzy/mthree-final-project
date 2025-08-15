@@ -49,19 +49,107 @@ def index():
 
 @app.route("/restaurants")
 def restaurants():
-    city = request.args.get("city")
-    if city:
-        cursor.execute("SELECT * FROM restaurants r JOIN locations l ON r.location_id = r.location_id WHERE city =%s", (city,))
+    cities = request.args.getlist("city")
+    order = request.args.get("order", "desc")
+    city = None
+    if len(cities) ==1:
+        city = cities[0]
+
+    if cities:
+        placeholders = ','.join(['%s'] * len(cities))
+        query = f"""
+            SELECT r.restaurant_id, r.name, r.cuisine, 
+                   COUNT(res.reservation_id) AS total_reservations, 
+                   l.province, l.city
+            FROM restaurants r
+            JOIN locations l ON r.location_id = l.location_id
+            LEFT JOIN tables t ON r.restaurant_id = t.restaurant_id
+            LEFT JOIN reservations res ON t.table_id = res.table_id
+            WHERE l.city IN ({placeholders})
+            GROUP BY r.restaurant_id, r.name, r.cuisine, l.province, l.city
+            ORDER BY total_reservations {order.upper()}
+        """
+        cursor.execute(query, cities)
+
     else:
-        cursor.execute("SELECT * FROM restaurants")
-    restaurant=cursor.fetchall()
-    return render_template('restaurants.html', restaurant=restaurant, city=city)
+        query = f"""
+            SELECT r.restaurant_id, r.name, r.cuisine, 
+                   COUNT(res.reservation_id) AS total_reservations, 
+                   l.province, l.city
+            FROM restaurants r
+            JOIN locations l ON r.location_id = l.location_id
+            LEFT JOIN tables t ON r.restaurant_id = t.restaurant_id
+            LEFT JOIN reservations res ON t.table_id = res.table_id
+            GROUP BY r.restaurant_id, r.name, r.cuisine, l.province, l.city
+            ORDER BY total_reservations {order.upper()}
+        """
+        cursor.execute(query)
+
+    restaurant = cursor.fetchall()
+
+    cursor.execute("SELECT DISTINCT city FROM locations ORDER BY city")
+    all_cities = [row[0] for row in cursor.fetchall()]
+
+    return render_template(
+        "restaurants.html",
+        restaurant=restaurant,
+        selected_cities=cities,
+        all_cities=all_cities,
+        order=order,
+        city=city
+    )
+
 
 @app.route("/dishes")
 def dishes():
-    cursor.execute("SELECT * FROM dish")
-    dishes=cursor.fetchall()
-    return render_template('dishes.html', dishes=dishes)
+
+    selected_cities = request.args.getlist("city")
+
+    city = None
+    if len(selected_cities) ==1:
+        city = selected_cities[0]
+
+    order_by_orders = request.args.get("order_by_orders", "desc")
+    if order_by_orders not in ["asc", "desc"]:
+        order_by_orders = "desc"
+
+    sql = """
+        SELECT d.dish_id, d.name, COUNT(oi.order_item_id) AS times_ordered, 
+               r.name, l.city, l.province
+        FROM order_items oi
+        RIGHT JOIN dish d ON oi.dish_id = d.dish_id
+        JOIN menu m ON d.menu_id = m.menu_id
+        JOIN restaurants r ON m.restaurant_id = r.restaurant_id
+        JOIN locations l ON r.location_id = l.location_id
+    """
+
+    params = []
+
+    if selected_cities:
+        placeholders = ",".join(["%s"] * len(selected_cities))
+        sql += f" WHERE l.city IN ({placeholders})"
+        params.extend(selected_cities)
+
+    sql += """
+        GROUP BY d.dish_id
+        ORDER BY times_ordered {}
+    """.format(order_by_orders.upper())
+
+    cursor.execute(sql, tuple(params))
+    dishes = cursor.fetchall()
+
+    cursor.execute("SELECT DISTINCT city FROM locations ORDER BY city")
+    all_cities = [row[0] for row in cursor.fetchall()]
+
+    return render_template(
+        'dishes.html',
+        dishes=dishes,
+        selected_cities=selected_cities,
+        order_by_orders=order_by_orders,
+        all_cities=all_cities,
+        city=city
+    )
+
 
 @app.route('/dishes/add', methods=['GET', 'POST'])
 def add_menu_item():

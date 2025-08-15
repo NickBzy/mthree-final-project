@@ -22,15 +22,53 @@
             </ul>
         </nav>  
         <main>
-            <ul>
-                {% for dish in dishes %}
-                <li>
-                    {{dish[2]}}
-                     <a href="{{ url_for('remove_menu_item', item_id=dish[0]) }}">Delete </a>
-                </li>
+            <div class="filters">
+                <form method="get" action="/dishes" id="filterForm">
+                    <label for="cities">Filter by City:</label>
+                    <select name="city" id="cities" multiple>
+                        {% for city in all_cities %}
+                            <option value="{{ city }}" {% if city in selected_cities %}selected{% endif %}>{{ city }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="hidden" name="order" value="{{ order }}">
+                    <button type="submit">Apply Filters</button>
+                </form>
+
+                <form method="get" action="/dishes" style="display:inline;">
+                    {% for city in selected_cities %}
+                        <input type="hidden" name="city" value="{{ city }}">
+                    {% endfor %}
+                    <input type="hidden" name="order_by_orders" value="{% if order_by_orders == 'desc' %}asc{% else %}desc{% endif %}">
+                    <button type="submit">
+                        Sort by Orders {% if order_by_orders == 'desc' %}↓{% else %}↑{% endif %}
+                    </button>
+                </form>
+            </div>
+            {% if city %}
+            <h2 class="dishes-header">Dishes in {{ city }}</h2>
+            {% else %}
+            <h2 class="dishes-header">All Dishes</h2>
+            {% endif %}
+            <div class="trending-dishes">
+                <div class="dishes-list">
+                    {% for dish in dishes %}
+                    <div class="dish-item">
+                        <div class="dish-item-bottom">
+                            <h3>{{ dish[1] }}</h3>
+                            <h3><span class="from">FROM </span>{{ dish[3] }}</h3>
+                            <p>Ordered <span>{{ dish[2] }}</span> times</p>
+                            <div class="location">
+                                <p><span> {{ dish[4] }}, </span> <span> {{ dish[5] }} </span></p>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('remove_menu_item', item_id=dish[0]) }}">Delete </a>
+                    </div>
+                    {% endfor %}
+                </div>
                 
-                {% endfor %}
-            </ul>
+            </div>
+
         </main>
          <footer>
             <p>© 2025 Foodies. All rights reserved.</p>

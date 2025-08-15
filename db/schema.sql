@@ -53,7 +53,6 @@ CREATE TABLE tables (
     restaurant_id INT,
     table_number INT,
     capacity INT,
-    status ENUM('available', 'occupied', 'reserved'),
     FOREIGN KEY (restaurant_id) REFERENCES restaurants(restaurant_id)
 );
 
@@ -722,3 +721,603 @@ INSERT INTO dish (menu_id, name, description, price, category, available) VALUES
 
 SELECT * FROM dish;
 
+INSERT INTO waiters (name, restaurant_id) VALUES
+('John Smith', 1),
+('Emily Johnson', 1),
+('Michael Brown', 2),
+('Sarah Davis', 2),
+('David Wilson', 3),
+('Laura Martinez', 3),
+('James Taylor', 4),
+('Megan Anderson', 4),
+('Robert Thomas', 5),
+('Jessica Moore', 5),
+('William White', 6),
+('Ashley Harris', 6),
+('Joseph Martin', 7),
+('Amanda Thompson', 7),
+('Charles Garcia', 8),
+('Jennifer Martinez', 8),
+('Daniel Robinson', 9),
+('Patricia Clark', 9),
+('Matthew Rodriguez', 10),
+('Kimberly Lewis', 10),
+('Anthony Lee', 11),
+('Elizabeth Walker', 11),
+('Mark Hall', 12),
+('Nancy Allen', 12),
+('Steven Young', 13),
+('Karen Hernandez', 13),
+('Paul King', 14),
+('Lisa Wright', 14),
+('Andrew Scott', 15),
+('Michelle Green', 15),
+('Joshua Baker', 16),
+('Angela Adams', 16),
+('Kevin Nelson', 17),
+('Stephanie Carter', 17),
+('Brian Mitchell', 18),
+('Rebecca Perez', 18),
+('Edward Roberts', 19),
+('Laura Turner', 19),
+('Jason Phillips', 20),
+('Rachel Campbell', 20),
+('Jeffrey Parker', 21),
+('Melissa Evans', 21),
+('Ryan Edwards', 22),
+('Amy Collins', 22),
+('Jacob Stewart', 23),
+('Angela Sanchez', 23),
+('Gary Morris', 24),
+('Emily Rogers', 24),
+('Justin Reed', 25),
+('Megan Cook', 25),
+('Scott Morgan', 26),
+('Jessica Bell', 26),
+('Eric Murphy', 27),
+('Sara Bailey', 27),
+('Brandon Rivera', 28),
+('Anna Cooper', 28),
+('Gregory Richardson', 29),
+('Heather Cox', 29),
+('Benjamin Howard', 30),
+('Nicole Ward', 30),
+('Patrick Brooks', 31),
+('Laura Sanders', 31),
+('Sean Price', 32),
+('Katherine Bennett', 32),
+('Dylan Wood', 33),
+('Emily Barnes', 33),
+('Jonathan Ross', 34),
+('Olivia Henderson', 34),
+('Aaron Coleman', 35),
+('Samantha Jenkins', 35),
+('Timothy Perry', 36),
+('Natalie Powell', 36),
+('Justin Long', 37),
+('Morgan Patterson', 37),
+('Adam Hughes', 38),
+('Vanessa Flores', 38),
+('Charles Bryant', 39),
+('Stephanie Simmons', 39),
+('Jason Foster', 40),
+('Melanie Butler', 40),
+('Jacob Gonzalez', 41),
+('Amanda Fisher', 41),
+('Mark Simmons', 42),
+('Laura Simmons', 42),
+('Derek Russell', 43),
+('Paula Jenkins', 43),
+('Shawn Powell', 44),
+('Cynthia Bryant', 44),
+('Brandon Griffin', 45),
+('Kimberly Russell', 45),
+('Keith Price', 46),
+('Tina Hamilton', 46),
+('Joseph Perry', 47),
+('Karen Patterson', 47),
+('Ryan Myers', 48),
+('Jessica Ross', 48),
+('Tyler Ross', 49),
+('Heather Ross', 49),
+('Samuel Brooks', 50),
+('Victoria Morgan', 50);
+
+SELECT * FROM waiters;
+
+INSERT INTO customers (first_name, last_name, phone_number, email) VALUES
+('John', 'Smith', '416-555-1001', 'john.smith@example.com'),
+('Emma', 'Johnson', '416-555-1002', 'emma.johnson@example.com'),
+('Liam', 'Williams', '416-555-1003', 'liam.williams@example.com'),
+('Olivia', 'Brown', '416-555-1004', 'olivia.brown@example.com'),
+('Noah', 'Jones', '416-555-1005', 'noah.jones@example.com'),
+('Ava', 'Garcia', '416-555-1006', 'ava.garcia@example.com'),
+('Sophia', 'Miller', '416-555-1007', 'sophia.miller@example.com'),
+('Jackson', 'Davis', '416-555-1008', 'jackson.davis@example.com'),
+('Isabella', 'Martinez', '416-555-1009', 'isabella.martinez@example.com'),
+('Lucas', 'Rodriguez', '416-555-1010', 'lucas.rodriguez@example.com'),
+('Mia', 'Lopez', '416-555-1011', 'mia.lopez@example.com'),
+('Ethan', 'Gonzalez', '416-555-1012', 'ethan.gonzalez@example.com'),
+('Amelia', 'Wilson', '416-555-1013', 'amelia.wilson@example.com'),
+('James', 'Anderson', '416-555-1014', 'james.anderson@example.com'),
+('Harper', 'Thomas', '416-555-1015', 'harper.thomas@example.com'),
+('Benjamin', 'Taylor', '416-555-1016', 'benjamin.taylor@example.com'),
+('Charlotte', 'Moore', '416-555-1017', 'charlotte.moore@example.com'),
+('Elijah', 'Jackson', '416-555-1018', 'elijah.jackson@example.com'),
+('Abigail', 'Martin', '416-555-1019', 'abigail.martin@example.com'),
+('Henry', 'Lee', '416-555-1020', 'henry.lee@example.com'),
+('Ella', 'Perez', '416-555-1021', 'ella.perez@example.com'),
+('Alexander', 'White', '416-555-1022', 'alexander.white@example.com'),
+('Grace', 'Harris', '416-555-1023', 'grace.harris@example.com'),
+('Sebastian', 'Sanchez', '416-555-1024', 'sebastian.sanchez@example.com'),
+('Chloe', 'Clark', '416-555-1025', 'chloe.clark@example.com'),
+('Daniel', 'Ramirez', '416-555-1026', 'daniel.ramirez@example.com'),
+('Victoria', 'Lewis', '416-555-1027', 'victoria.lewis@example.com'),
+('Matthew', 'Robinson', '416-555-1028', 'matthew.robinson@example.com'),
+('Scarlett', 'Walker', '416-555-1029', 'scarlett.walker@example.com'),
+('David', 'Young', '416-555-1030', 'david.young@example.com'),
+('Aria', 'Allen', '416-555-1031', 'aria.allen@example.com'),
+('Joseph', 'King', '416-555-1032', 'joseph.king@example.com'),
+('Lily', 'Wright', '416-555-1033', 'lily.wright@example.com'),
+('Samuel', 'Scott', '416-555-1034', 'samuel.scott@example.com'),
+('Zoey', 'Torres', '416-555-1035', 'zoey.torres@example.com'),
+('Carter', 'Nguyen', '416-555-1036', 'carter.nguyen@example.com'),
+('Penelope', 'Hill', '416-555-1037', 'penelope.hill@example.com'),
+('Owen', 'Flores', '416-555-1038', 'owen.flores@example.com'),
+('Layla', 'Green', '416-555-1039', 'layla.green@example.com'),
+('Wyatt', 'Adams', '416-555-1040', 'wyatt.adams@example.com'),
+('Riley', 'Nelson', '416-555-1041', 'riley.nelson@example.com'),
+('Gabriel', 'Baker', '416-555-1042', 'gabriel.baker@example.com'),
+('Nora', 'Hall', '416-555-1043', 'nora.hall@example.com'),
+('Jack', 'Rivera', '416-555-1044', 'jack.rivera@example.com'),
+('Hannah', 'Campbell', '416-555-1045', 'hannah.campbell@example.com'),
+('Levi', 'Mitchell', '416-555-1046', 'levi.mitchell@example.com'),
+('Lillian', 'Carter', '416-555-1047', 'lillian.carter@example.com'),
+('Mason', 'Roberts', '416-555-1048', 'mason.roberts@example.com'),
+('Evelyn', 'Phillips', '416-555-1049', 'evelyn.phillips@example.com'),
+('Hudson', 'Evans', '416-555-1050', 'hudson.evans@example.com');
+
+SELECT * FROM customers;
+
+INSERT INTO tables (restaurant_id, table_number, capacity) VALUES
+(1, 1, 4),
+(1, 2, 2),
+
+(2, 1, 4),
+(2, 2, 6),
+
+(3, 1, 2),
+(3, 2, 4),
+
+(4, 1, 4),
+(4, 2, 6),
+
+(5, 1, 2),
+(5, 2, 4),
+
+(6, 1, 6),
+(6, 2, 4),
+
+(7, 1, 2),
+(7, 2, 4),
+
+(8, 1, 4),
+(8, 2, 6),
+
+(9, 1, 2),
+(9, 2, 4),
+
+(10, 1, 6),
+(10, 2, 4),
+
+(11, 1, 2),
+(11, 2, 4),
+
+(12, 1, 4),
+(12, 2, 6),
+
+(13, 1, 2),
+(13, 2, 4),
+
+(14, 1, 4),
+(14, 2, 6),
+
+(15, 1, 2),
+(15, 2, 4),
+
+(16, 1, 4),
+(16, 2, 6),
+
+(17, 1, 2),
+(17, 2, 4),
+
+(18, 1, 6),
+(18, 2, 4),
+
+(19, 1, 2),
+(19, 2, 4),
+
+(20, 1, 4),
+(20, 2, 6),
+
+(21, 1, 2),
+(21, 2, 4),
+
+(22, 1, 4),
+(22, 2, 6),
+
+(23, 1, 2),
+(23, 2, 4),
+
+(24, 1, 4),
+(24, 2, 6),
+
+(25, 1, 2),
+(25, 2, 4),
+
+(26, 1, 4),
+(26, 2, 6),
+
+(27, 1, 2),
+(27, 2, 4),
+
+(28, 1, 4),
+(28, 2, 6),
+
+(29, 1, 2),
+(29, 2, 4),
+
+(30, 1, 4),
+(30, 2, 6),
+
+(31, 1, 2),
+(31, 2, 4),
+
+(32, 1, 4),
+(32, 2, 6),
+
+(33, 1, 2),
+(33, 2, 4),
+
+(34, 1, 4),
+(34, 2, 6),
+
+(35, 1, 2),
+(35, 2, 4),
+
+(36, 1, 4),
+(36, 2, 6),
+
+(37, 1, 2),
+(37, 2, 4),
+
+(38, 1, 4),
+(38, 2, 6),
+
+(39, 1, 2),
+(39, 2, 4),
+
+(40, 1, 4),
+(40, 2, 6),
+
+(41, 1, 2),
+(41, 2, 4),
+
+(42, 1, 4),
+(42, 2, 6),
+
+(43, 1, 2),
+(43, 2, 4),
+
+(44, 1, 4),
+(44, 2, 6),
+
+(45, 1, 2),
+(45, 2, 4),
+
+(46, 1, 4),
+(46, 2, 6),
+
+(47, 1, 2),
+(47, 2, 4),
+
+(48, 1, 4),
+(48, 2, 6),
+
+(49, 1, 2),
+(49, 2, 4),
+
+(50, 1, 4),
+(50, 2, 6);
+
+
+INSERT INTO reservations (customer_id, table_id, reservation_time, status) VALUES
+(1, 1, '2025-08-10 19:00:00', 'completed'),
+(2, 2, '2025-08-11 20:30:00', 'completed'),
+(3, 3, '2025-08-12 18:45:00', 'cancelled'),
+(4, 4, '2025-08-15 13:00:00', 'confirmed'),
+(5, 5, '2025-08-20 19:30:00', 'pending'),
+(6, 6, '2025-08-21 20:00:00', 'confirmed'),
+(7, 7, '2025-07-25 18:00:00', 'completed'),
+(8, 8, '2025-07-30 19:15:00', 'completed'),
+(9, 9, '2025-08-01 20:00:00', 'cancelled'),
+(10, 10, '2025-08-22 21:00:00', 'pending'),
+
+(11, 11, '2025-08-13 12:30:00', 'confirmed'),
+(12, 12, '2025-08-14 19:00:00', 'pending'),
+(13, 13, '2025-08-09 18:00:00', 'completed'),
+(14, 14, '2025-08-05 19:00:00', 'completed'),
+(15, 15, '2025-08-24 20:30:00', 'confirmed'),
+(16, 16, '2025-08-16 18:00:00', 'pending'),
+(17, 17, '2025-08-18 19:45:00', 'confirmed'),
+(18, 18, '2025-08-19 20:15:00', 'confirmed'),
+(19, 19, '2025-08-07 19:00:00', 'completed'),
+(20, 20, '2025-08-25 21:00:00', 'pending'),
+
+(21, 21, '2025-08-02 18:30:00', 'cancelled'),
+(22, 22, '2025-08-03 20:00:00', 'completed'),
+(23, 23, '2025-08-23 19:00:00', 'confirmed'),
+(24, 24, '2025-08-17 18:00:00', 'pending'),
+(25, 25, '2025-08-26 19:30:00', 'pending'),
+(26, 26, '2025-07-28 18:45:00', 'completed'),
+(27, 27, '2025-08-27 20:00:00', 'confirmed'),
+(28, 28, '2025-08-28 21:00:00', 'pending'),
+(29, 29, '2025-08-29 19:15:00', 'confirmed'),
+(30, 30, '2025-08-04 18:00:00', 'completed'),
+
+(31, 31, '2025-08-30 19:00:00', 'pending'),
+(32, 32, '2025-09-01 20:30:00', 'pending'),
+(33, 33, '2025-09-02 19:45:00', 'pending'),
+(34, 34, '2025-09-03 18:15:00', 'pending'),
+(35, 35, '2025-09-04 20:00:00', 'pending'),
+(36, 36, '2025-09-05 19:30:00', 'pending'),
+(37, 37, '2025-09-06 21:00:00', 'pending'),
+(38, 38, '2025-09-07 19:00:00', 'pending'),
+(39, 39, '2025-09-08 18:00:00', 'pending'),
+(40, 40, '2025-09-09 20:30:00', 'pending'),
+
+(41, 41, '2025-08-14 18:45:00', 'confirmed'),
+(42, 42, '2025-08-12 19:30:00', 'completed'),
+(43, 43, '2025-08-11 20:00:00', 'cancelled'),
+(44, 44, '2025-08-10 21:15:00', 'completed'),
+(45, 45, '2025-08-09 18:30:00', 'completed'),
+(46, 46, '2025-08-08 19:45:00', 'completed'),
+(47, 47, '2025-08-07 20:00:00', 'completed'),
+(48, 48, '2025-08-06 19:15:00', 'completed'),
+(49, 49, '2025-08-05 18:30:00', 'completed'),
+(50, 50, '2025-08-04 20:00:00', 'completed');
+
+
+INSERT INTO orders (customer_id, waiter_id, order_time, status) VALUES
+(1, 5, '2025-08-10 19:05:00', 'completed'),
+(2, 6, '2025-08-10 19:30:00', 'completed'),
+(3, 7, '2025-08-11 12:15:00', 'completed'),
+(4, 8, '2025-08-11 13:00:00', 'completed'),
+(5, 9, '2025-08-12 20:00:00', 'cancelled'),
+
+(6, 10, '2025-08-12 18:45:00', 'completed'),
+(7, 11, '2025-08-13 19:30:00', 'completed'),
+(8, 12, '2025-08-13 20:15:00', 'pending'),
+(9, 13, '2025-08-14 18:00:00', 'in_progress'),
+(10, 14, '2025-08-14 19:45:00', 'pending'),
+
+(11, 15, '2025-08-15 12:30:00', 'completed'),
+(12, 16, '2025-08-15 13:15:00', 'completed'),
+(13, 17, '2025-08-16 19:00:00', 'completed'),
+(14, 18, '2025-08-16 20:00:00', 'completed'),
+(15, 19, '2025-08-17 18:30:00', 'cancelled'),
+
+(16, 20, '2025-08-17 19:15:00', 'pending'),
+(17, 21, '2025-08-18 20:45:00', 'in_progress'),
+(18, 22, '2025-08-19 21:00:00', 'pending'),
+(19, 23, '2025-08-19 19:00:00', 'completed'),
+(20, 24, '2025-08-20 18:30:00', 'completed'),
+
+(21, 25, '2025-08-20 20:15:00', 'completed'),
+(22, 26, '2025-08-21 18:45:00', 'completed'),
+(23, 27, '2025-08-21 19:30:00', 'pending'),
+(24, 28, '2025-08-22 20:00:00', 'in_progress'),
+(25, 29, '2025-08-22 21:15:00', 'pending'),
+
+(26, 30, '2025-08-23 19:00:00', 'completed'),
+(27, 31, '2025-08-24 18:30:00', 'completed'),
+(28, 32, '2025-08-24 20:00:00', 'cancelled'),
+(29, 33, '2025-08-25 19:45:00', 'completed'),
+(30, 34, '2025-08-25 21:00:00', 'completed'),
+
+(31, 35, '2025-08-26 18:15:00', 'pending'),
+(32, 36, '2025-08-26 19:30:00', 'pending'),
+(33, 37, '2025-08-27 20:45:00', 'pending'),
+(34, 38, '2025-08-28 19:00:00', 'in_progress'),
+(35, 39, '2025-08-28 18:45:00', 'completed'),
+
+(36, 40, '2025-08-29 20:15:00', 'completed'),
+(37, 41, '2025-08-30 19:00:00', 'completed'),
+(38, 42, '2025-08-30 20:30:00', 'pending'),
+(39, 43, '2025-08-31 18:30:00', 'pending'),
+(40, 44, '2025-08-31 19:45:00', 'pending'),
+
+(41, 45, '2025-09-01 20:00:00', 'pending'),
+(42, 46, '2025-09-02 19:00:00', 'pending'),
+(43, 47, '2025-09-02 20:15:00', 'pending'),
+(44, 48, '2025-09-03 18:30:00', 'pending'),
+(45, 49, '2025-09-03 19:45:00', 'pending'),
+
+(46, 50, '2025-09-04 20:30:00', 'pending'),
+(47, 1,  '2025-09-05 18:15:00', 'pending'),
+(48, 2,  '2025-09-05 19:00:00', 'pending'),
+(49, 3,  '2025-09-06 20:00:00', 'pending'),
+(50, 4,  '2025-09-06 21:00:00', 'pending');
+
+
+INSERT INTO order_items (order_id, dish_id, quantity) VALUES
+(1, 2, 1),
+(1, 5, 2),
+(1, 9, 1),
+
+(2, 7, 1),
+(2, 12, 1),
+
+(3, 15, 3),
+(3, 22, 1),
+
+(4, 4, 2),
+(4, 19, 1),
+
+(5, 3, 1),
+(5, 8, 2),
+
+(6, 14, 1),
+(6, 20, 1),
+(6, 25, 1),
+
+(7, 11, 1),
+(7, 24, 2),
+
+(8, 10, 1),
+
+(9, 13, 2),
+(9, 16, 1),
+
+(10, 6, 1),
+(10, 18, 3),
+
+(11, 17, 1),
+(11, 21, 1),
+
+(12, 23, 2),
+(12, 27, 1),
+
+(13, 28, 1),
+(13, 29, 1),
+(13, 30, 1),
+
+(14, 31, 1),
+(14, 33, 1),
+
+(15, 34, 2),
+
+(16, 35, 1),
+(16, 36, 2),
+
+(17, 37, 1),
+(17, 38, 1),
+
+(18, 39, 2),
+
+(19, 40, 1),
+(19, 41, 1),
+
+(20, 42, 1),
+
+(21, 43, 1),
+(21, 44, 1),
+
+(22, 45, 1),
+
+(23, 46, 2),
+
+(24, 47, 1),
+(24, 48, 2),
+
+(25, 49, 1),
+
+(26, 50, 1),
+
+(27, 1, 1),
+(27, 5, 1),
+
+(28, 2, 2),
+
+(29, 3, 1),
+(29, 7, 1),
+
+(30, 8, 2),
+
+(31, 9, 1),
+(31, 10, 1),
+
+(32, 11, 1),
+(32, 12, 1),
+
+(33, 13, 1),
+(33, 14, 1),
+
+(34, 15, 1),
+
+(35, 16, 2),
+
+(36, 17, 1),
+
+(37, 18, 1),
+(37, 19, 1),
+
+(38, 20, 1),
+
+(39, 21, 2),
+
+(40, 22, 1),
+
+(41, 23, 1),
+
+(42, 24, 1),
+
+(43, 25, 2),
+
+(44, 26, 1),
+
+(45, 27, 1),
+
+(46, 28, 1),
+
+(47, 29, 1),
+
+(48, 30, 2),
+
+(49, 31, 1),
+
+(50, 32, 1);
+
+SELECT * FROM order_items;
+
+SELECT d.dish_id, d.name, COUNT(oi.order_item_id) AS times_ordered, r.name
+        FROM order_items oi
+        JOIN dish d ON oi.dish_id = d.dish_id
+        JOIN menu m on d.menu_id = m.menu_id
+        JOIN restaurants r on m.restaurant_id = r.restaurant_id
+        GROUP BY d.dish_id
+        ORDER BY times_ordered DESC
+        LIMIT 6;
+        
+SELECT * FROM restaurants r
+JOIN locations l ON r.location_id = r.location_id
+WHERE l.city = "montReal";
+
+SELECT 
+    r.restaurant_id, 
+    r.name, 
+    r.cuisine, 
+    COUNT(res.reservation_id) AS total_reservations, 
+    l.province, 
+    l.city
+FROM restaurants r
+JOIN locations l 
+    ON r.location_id = l.location_id
+JOIN tables t 
+    ON r.restaurant_id = t.restaurant_id
+LEFT JOIN reservations res 
+    ON t.table_id = res.table_id
+GROUP BY r.restaurant_id, r.name, r.cuisine, l.province, l.city;
+
+SELECT * FROM restaurants;
+
+SELECT d.dish_id, d.name, COUNT(oi.order_item_id) AS times_ordered, r.name, l.city, l.province
+        FROM order_items oi
+        RIGHT JOIN dish d ON oi.dish_id = d.dish_id
+        JOIN menu m on d.menu_id = m.menu_id
+        JOIN restaurants r on m.restaurant_id = r.restaurant_id
+        JOIN locations l on r.location_id = l.location_id
+        GROUP BY d.dish_id
+        ORDER BY times_ordered DESC;
+        
+SELECT * FROM dish WHERE name like "Potato%";

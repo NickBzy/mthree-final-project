@@ -272,3 +272,53 @@ footer {
     color: white;
     font-size: 1.2rem;
 }
+
+
+
+/* RESTAURANTS/DISHES PAGE */
+.restaurant-header, .dishes-header {
+  padding: 30px 30px 10px;
+}
+
+.restaurants-list, .dishes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.restaurant-item-list, .dish-item-list {
+  padding: 10px 20px;
+}
+
+.dish-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dish-item a {
+  padding-right: 20px;
+  color: var(--black);
+}
+
+.dish-item a:hover {
+  padding-right: 20px;
+  color: var(--dark-green);
+}
+
+.filters {
+  padding: 20px 30px 0px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.filters form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filters form select {
+  height: 200px;
+}
