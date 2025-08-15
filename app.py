@@ -49,9 +49,13 @@ def index():
 
 @app.route("/restaurants")
 def restaurants():
-    cursor.execute("SELECT * FROM restaurants")
+    city = request.args.get("city")
+    if city:
+        cursor.execute("SELECT * FROM restaurants r JOIN locations l ON r.location_id = r.location_id WHERE city =%s", (city,))
+    else:
+        cursor.execute("SELECT * FROM restaurants")
     restaurant=cursor.fetchall()
-    return render_template('restaurants.html', restaurant=restaurant)
+    return render_template('restaurants.html', restaurant=restaurant, city=city)
 
 @app.route("/dishes")
 def dishes():

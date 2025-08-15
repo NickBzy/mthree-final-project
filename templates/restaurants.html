@@ -21,6 +21,11 @@
             </ul>
         </nav>  
         <main>
+            {% if city %}
+            <h2>Restaurants in {{ city }}</h2>
+            {% else %}
+            <h2>All Restaurants</h2>
+            {% endif %}
             <ul>
                 {% for resto in restaurant %}
                 <li>
