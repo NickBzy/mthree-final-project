@@ -21,10 +21,39 @@
             </ul>
         </nav>  
         <main>
+            {% block content %}
+<h2>Add Menu Item</h2>
+<form method="POST" action="{{ url_for('add_reserv') }}">
+    <div class="mb-3">
+        <label for="costumer_id" class="form-label">Costumer Id</label>
+        <input type="text" class="form-control" id="costumer_id" name="costumer_id" required>
+    </div>
+    <div class="mb-3">
+        <label for="table_id" class="form-label">Table Id</label>
+        <input type="text" class="form-control" id="table_id" name="table_id" rows="3"></input>
+    </div>
+    <div class="mb-3">
+        <label for="reservation_time" class="form-label">Reservation time*</label>
+        <input type="date" step="0.01" class="form-control" id="reservation_time" name="reservation_time" required>
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="pending" name="pending" value="true" checked>
+        <label class="form-check-label" for="pending">Pending</label>
+        <input type="checkbox" class="form-check-input" id="confirmed" name="confirmed" value="true" checked>
+        <label class="form-check-label" for="confirmed">Confirmed</label>
+        <input type="checkbox" class="form-check-input" id="cancelled" name="cancelled" value="true" checked>
+        <label class="form-check-label" for="cancelled">Cancelled</label>
+        <input type="checkbox" class="form-check-input" id="completed" name="completed" value="true" checked>
+        <label class="form-check-label" for="completed">Completed</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{{ url_for('add_reserv') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
             <ul>
                 {% for reserv in reservs %}
                 <li>
-                    Table = {{reserv[0]}}, Heure = {{reserv[1]}}
+                    Table = {{reserv[0]}}, Heure = {{reserv[1]}}, Status = {{reserv[2]}}
                 </li>
                 {% endfor %}
             </ul>

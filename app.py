@@ -192,9 +192,27 @@ def reserve():
     return render_template('reservations.html', restaurant=resto)
 @app.route("/reservation/<int:rest_id>")
 def reserve_resto(rest_id):
-    cursor.execute("SELECT tables.table_number, reservations.reservation_time FROM (reservations JOIN tables ON reservations.table_id=tables.table_id) WHERE restaurant_id=%s", (rest_id,))
+    cursor.execute("SELECT tables.table_number, reservations.reservation_time, reservations.status FROM (reservations JOIN tables ON reservations.table_id=tables.table_id) WHERE restaurant_id=%s", (rest_id,))
     reserv=cursor.fetchall()
     return render_template("reserve_resto.html",reservs=reserv)
+@app.route("/reservation/add", methods=["POST", "GET"])
+def add_reserv():
+    costumer_id = request.form.get('costumer_id')
+    table_id = request.form.get('table_id')
+    reservation_time = request.form.get('reservation_time')
+    if request.form.get("pending"):
+        status="pending"
+    elif request.form.get("completed"):
+        status="completed"
+    elif request.form.get("confirmed"):
+        status="confirmed"
+    else:
+        status="cancelled"
+    cursor.execute("""
+        INSERT INTO reservations (customer_id, table_id, reservation_time, status)
+        VALUES (%s, %s, %s, %s)
+    """, (costumer_id, table_id, reservation_time, status))
+    return redirect("/reservations")
 
 
 app.run("0.0.0.0", port=5000, debug=True)
