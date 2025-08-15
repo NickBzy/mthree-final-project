@@ -73,7 +73,9 @@ def reserve():
     return render_template('reservations.html', restaurant=resto)
 @app.route("/reservation/<int:rest_id>")
 def reserve_resto(rest_id):
-    return render_template(reserve_resto,restoId=rest_id)
+    cursor.execute("SELECT * FROM (reservations JOIN tables ON reservations.table_id=tables.table_id) WHERE restaurant_id=%s", (rest_id,))
+    reserv=cursor.fetchall()
+    return render_template("reserve_resto.html",reservs=reserv)
 
 
 app.run("0.0.0.0", port=5000, debug=True)
