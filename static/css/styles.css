@@ -334,6 +334,12 @@ footer {
   justify-content: space-between;
 }
 
+.restaurant-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 /* ADD OVERLAY */
 .add-restaurant-form {
     display: flex;

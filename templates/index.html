@@ -61,27 +61,27 @@
                     <div class="restaurant-item">
                         
                         <div class="restaurant-item-bottom">
-                            <a href="{{url_for('resto_dishes', resto_id=restaurant[0])}}"
-                            <h3>{{ restaurant[1] }}</h3>
-                            <div class="rating">
-                                <div class="stars">
-                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
-                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
-                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
-                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
-                                    <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                            <a href="{{url_for('resto_dishes', resto_id=restaurant[0])}}" class="restaurant-link">
+                                <h3>{{ restaurant[1] }}</h3>
+                                <div class="rating">
+                                    <div class="stars">
+                                        <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                        <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                        <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                        <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                        <div class="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg></div>
+                                    </div>
+                                    <p class="rating-count">0</p>
                                 </div>
-                                <p class="rating-count">0</p>
-                            </div>
-                            <div class="reservations-count">
-                                <p>{{ restaurant[3] }} reservations</p>
-                            </div>
-                            <div class="location">
-                                <p><span>{{ restaurant[5] }}, </span><span>{{ restaurant[4] }}</span></p>
-                            </div>
-                            <div class="restaurant-info">
-                                <p class="cuisine">{{ restaurant[2] }}</p>
-                            </div>
+                                <div class="reservations-count">
+                                    <p>{{ restaurant[3] }} reservations</p>
+                                </div>
+                                <div class="location">
+                                    <p><span>{{ restaurant[5] }}, </span><span>{{ restaurant[4] }}</span></p>
+                                </div>
+                                <div class="restaurant-info">
+                                    <p class="cuisine">{{ restaurant[2] }}</p>
+                                </div>
                             </a>
                         </div>
                         
