@@ -246,6 +246,18 @@ main {
     padding: 10px;
 }
 
+.rating {
+  display: flex;
+}
+
+.stars {
+  display: flex;
+}
+
+.star svg {
+  width: 20px;
+  fill: var(--dark-green);
+}
 
 /* FOOTER */
 footer {

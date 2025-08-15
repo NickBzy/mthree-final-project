@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, redirect
-import mysql
+import mysql.connector
 import os
 
 # Change to environment variables later
@@ -28,7 +28,7 @@ def restaurants():
 
 @app.route("/dishes")
 def dishes():
-    cursor.execute("SELECT * FROM restaurants")
+    cursor.execute("SELECT * FROM dish")
     dishes=cursor.fetchall()
     return render_template('dishes.html', dishes=dishes)
 
