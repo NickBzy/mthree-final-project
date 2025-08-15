@@ -17,7 +17,34 @@ app=Flask("restaurant")
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    cursor.execute("""
+        SELECT r.restaurant_id, r.name, r.cuisine, COUNT(res.reservation_id) AS total_reservations, l.province, l.city
+        FROM restaurants r
+        JOIN tables t ON r.restaurant_id = t.restaurant_id
+        JOIN reservations res ON t.table_id = res.table_id
+        JOIN locations l ON r.location_id = l.location_id
+        GROUP BY r.restaurant_id
+        ORDER BY total_reservations DESC
+        LIMIT 6;
+    """)
+
+    top_restaurants = cursor.fetchall()
+
+    cursor.execute("""
+        SELECT d.dish_id, d.name, COUNT(oi.order_item_id) AS times_ordered, r.name, l.city, l.province
+        FROM order_items oi
+        JOIN dish d ON oi.dish_id = d.dish_id
+        JOIN menu m on d.menu_id = m.menu_id
+        JOIN restaurants r on m.restaurant_id = r.restaurant_id
+        JOIN locations l on r.location_id = l.location_id
+        GROUP BY d.dish_id
+        ORDER BY times_ordered DESC
+        LIMIT 6;
+    """)
+
+    top_dishes = cursor.fetchall()
+
+    return render_template('index.html', top_restaurants=top_restaurants, top_dishes=top_dishes)
 
 
 @app.route("/restaurants")

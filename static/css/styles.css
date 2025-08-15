@@ -259,6 +259,10 @@ main {
   fill: var(--dark-green);
 }
 
+.from {
+  color: var(--dark-green);
+}
+
 /* FOOTER */
 footer {
     background-color: var(--green);
