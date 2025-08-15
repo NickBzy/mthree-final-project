@@ -48,6 +48,11 @@
                 </div>
                 <button class="add">Add Dish</button>
             </div>
+            {% if resto_id %}
+            <a href="{{ url_for('reserve_resto', rest_id=resto_id) }}">
+                <h2 class="dishes-header">Make reservation</h2>
+            </a>
+            {% endif %}
             
             {% if city %}
             <h2 class="dishes-header">Dishes in {{ city }}</h2>
