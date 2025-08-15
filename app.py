@@ -99,7 +99,11 @@ def restaurants():
         city=city
     )
 
-
+@app.route("/restaurants/<int:resto_id>")
+def resto_dishes(resto_id):
+    cursor.execute("SELECT * FROM (dish JOIN menu ON dish.menu_id=menu.menu_id) WHERE menu.restaurant_id=%s", (resto_id,))
+    dishes=cursor.fetchall()
+    return render_template("dishes.html",dishes=dishes)
 @app.route("/dishes")
 def dishes():
 

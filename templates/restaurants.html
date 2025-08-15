@@ -54,6 +54,7 @@
             <div class="featured-restaurants">
                 <div class="restaurants-list">
                     {% for restaurant in restaurant %}
+                    <a href="{{url_for('resto_dishes', resto_id=restaurant[0])}}"
                     <div class="restaurant-item">
                         <div class="restaurant-item-list">
                             <h3>{{ restaurant[1] }}</h3>
@@ -78,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+                </a>
                     {% endfor %}
                 </div>
                     
