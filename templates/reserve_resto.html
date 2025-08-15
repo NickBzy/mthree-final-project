@@ -1,0 +1,31 @@
+{% block content %}
+<h2>Add Menu Item</h2>
+<form method="POST" action="{{ url_for('add_reservation') }}">
+    <div class="mb-3">
+        <label for="name" class="form-label">Item Name*</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Price*</label>
+        <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <input type="text" class="form-control" id="category" name="category" required>
+    </div>
+    <div class="mb-3">
+         <label for="menu" class="form-label">Menu</label>
+         <input type="text" class="form-control" id="menu" name="menu">
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="is_available" name="is_available" value="true" checked>
+        <label class="form-check-label" for="is_available">Available</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{{ url_for('add_menu_item') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

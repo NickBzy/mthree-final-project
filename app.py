@@ -68,7 +68,12 @@ def remove_menu_item(item_id):
 
 @app.route("/reservations")
 def reserve():
-    return render_template('reservations.html')
+    cursor.execute("SELECT * FROM restaurants")
+    resto=cursor.fetchall()
+    return render_template('reservations.html', restaurant=resto)
+@app.route("/reservation/<int:rest_id>")
+def reserve_resto(rest_id):
+    return render_template(reserve_resto,restoId=rest_id)
 
 
 app.run("0.0.0.0", port=5000, debug=True)
