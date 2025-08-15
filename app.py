@@ -43,38 +43,39 @@ def add_menu_item():
         menu=request.form.get("menu")
         
         if not name or not price:
-            flash('Name and price are required', 'danger')
             return render_template("add_dishes.html")
         
         try:
             price = float(price)
         except ValueError:
-            flash('Invalid price format', 'danger')
             return render_template("add_dishes.html")
         
         cursor.execute("""
-            INSERT INTO menu_items (name, description, price, category, is_available, menu)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, (name, description, price, category, is_available, menu))
-        mysql.connection.commit()
-        cursor.close()
-        flash('Menu item added successfully!', 'success')
-        return redirect("/")
+            INSERT INTO dish (name, description, price, category)
+            VALUES (%s, %s, %s, %s)
+        """, (name, description, price, category))
+        return redirect("/dishes")
     
     return render_template('add_dishes.html')
 @app.route("/dishes/delete/<int:item_id>")
 def remove_menu_item(item_id):
-    cursor.execute("SELECT id FROM dish WHERE id = %s", (item_id,))
+    cursor.execute("""SELECT dish_id FROM dish WHERE dish_id = %s""", (item_id,))
     if not cursor.fetchone():
-            flash('Dish not found', 'danger')
             return redirect("/")
-    cursor.execute("DELETE FROM menu_items WHERE id = %s", (item_id,))
-    flash('Dish deleted successfully', 'success')
-    return redirect("/")
+    cursor.execute("DELETE FROM order_items WHERE dish_id = %s", (item_id,))
+    cursor.execute("DELETE FROM dish WHERE dish_id = %s", (item_id,))
+    return redirect("/dishes")
 
 @app.route("/reservations")
 def reserve():
-    return render_template('reservations.html')
+    cursor.execute("SELECT * FROM restaurants")
+    resto=cursor.fetchall()
+    return render_template('reservations.html', restaurant=resto)
+@app.route("/reservation/<int:rest_id>")
+def reserve_resto(rest_id):
+    cursor.execute("SELECT tables.table_number, reservations.reservation_time FROM (reservations JOIN tables ON reservations.table_id=tables.table_id) WHERE restaurant_id=%s", (rest_id,))
+    reserv=cursor.fetchall()
+    return render_template("reserve_resto.html",reservs=reserv)
 
 
 app.run("0.0.0.0", port=5000, debug=True)

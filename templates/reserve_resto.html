@@ -22,9 +22,9 @@
         </nav>  
         <main>
             <ul>
-                {% for resto in restaurant %}
+                {% for reserv in reservs %}
                 <li>
-                    {{resto[1]}} <a href="{{ url_for('reserve_resto', rest_id=resto[0]) }}">Check reservations </a>
+                    Table = {{reserv[0]}}, Heure = {{reserv[1]}}
                 </li>
                 {% endfor %}
             </ul>
