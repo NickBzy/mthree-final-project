@@ -186,15 +186,39 @@ def dishes():
     cursor.execute("SELECT DISTINCT city FROM locations ORDER BY city")
     all_cities = [row[0] for row in cursor.fetchall()]
 
+    cursor.execute("SELECT restaurant_id, name FROM restaurants ORDER BY name")
+    restaurants = cursor.fetchall()
+
     return render_template(
         'dishes.html',
         dishes=dishes,
         selected_cities=selected_cities,
         order_by_orders=order_by_orders,
         all_cities=all_cities,
-        city=city
+        city=city,
+        restaurants=restaurants
     )
 
+@app.route("/get_menus/<int:restaurant_id>")
+def get_menus(restaurant_id):
+    cursor.execute("SELECT menu_id, name FROM menu WHERE restaurant_id = %s ORDER BY name", (restaurant_id,))
+    menus = cursor.fetchall()
+    return jsonify(menus)
+
+@app.route("/add_dish", methods=["POST"])
+def add_dish():
+    restaurant_id = request.form["restaurant_id"]
+    menu_id = request.form["menu_id"]
+    dish_name = request.form["dish_name"]
+    price = request.form["price"]
+
+    cursor.execute("""
+        INSERT INTO dish (menu_id, name, price)
+        VALUES (%s, %s, %s)
+    """, (menu_id, dish_name, price))
+    conn.commit()
+
+    return redirect("/dishes")
 
 @app.route('/dishes/add', methods=['GET', 'POST'])
 def add_menu_item():

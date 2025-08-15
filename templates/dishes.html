@@ -74,29 +74,69 @@
             </div>
 
             <div class="add-overlay">
-                <form action="/add_restaurant" method="POST" class="add-restaurant-form">
-                    <h2>Add a New Restaurant</h2>
+                <form action="/add_dish" method="post" class="add-dish-form">
+                    
+                    <label for="restaurant">Restaurant:</label>
+                    <select id="restaurant" name="restaurant_id" required>
+                        <option value="">Select Restaurant</option>
+                        {% for r_id, r_name in restaurants %}
+                            <option value="{{ r_id }}">{{ r_name }}</option>
+                        {% endfor %}
+                    </select>
 
-                    <!-- Restaurant Name -->
-                    <label for="name">Restaurant Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Enter restaurant name" required>
+                    <label for="menu">Menu:</label>
+                    <select id="menu" name="menu_id" required>
+                        <option value="">Select Menu</option>
+                    </select>
 
-                    <!-- Cuisine -->
-                    <label for="cuisine">Cuisine:</label>
-                    <input type="text" id="cuisine" name="cuisine" placeholder="e.g. Italian, Sushi, Mexican" required>
+                    <label for="dish-name">Dish Name:</label>
+                    <input type="text" id="dish-name" name="dish_name" required>
 
-                    <!-- Province -->
-                    <label for="province">Province:</label>
-                    <input type="text" id="province" name="province" placeholder="Province" required>
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" step="0.01" required>
 
-                    <!-- City -->
-                    <label for="city">City:</label>
-                    <input type="text" id="city" name="city" placeholder="City" required>
-
-                    <!-- Submit -->
-                    <button type="submit">Add Restaurant</button>
+                    <button type="submit">Add Dish</button>
                 </form>
             </div>
+
+            <script>
+            document.getElementById("restaurant").addEventListener("change", function() {
+                let restaurantId = this.value;
+                let menuSelect = document.getElementById("menu");
+                menuSelect.innerHTML = '<option value="">Loading...</option>';
+
+                if (restaurantId) {
+                    fetch(`/get_menus/${restaurantId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            menuSelect.innerHTML = '<option value="">Select Menu</option>';
+                            data.forEach(menu => {
+                                let option = document.createElement("option");
+                                option.value = menu[0];
+                                option.textContent = menu[1];
+                                menuSelect.appendChild(option);
+                            });
+                        });
+                } else {
+                    menuSelect.innerHTML = '<option value="">Select Menu</option>';
+                }
+            });
+            document.addEventListener("DOMContentLoaded", () => {
+                const overlay = document.querySelector(".add-overlay");
+                const addBtn = document.querySelector(".add");
+
+                addBtn.addEventListener("click", () => {
+                    overlay.classList.add("active");
+                });
+
+                // Close overlay when clicking outside form
+                overlay.addEventListener("click", (e) => {
+                    if (e.target === overlay) {
+                        overlay.classList.remove("active");
+                    }
+                });
+            });
+            </script>
 
         </main>
          <footer>

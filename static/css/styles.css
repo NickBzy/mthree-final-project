@@ -341,7 +341,7 @@ footer {
 }
 
 /* ADD OVERLAY */
-.add-restaurant-form {
+.add-restaurant-form, .add-dish-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
