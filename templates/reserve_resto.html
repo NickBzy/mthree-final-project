@@ -22,7 +22,7 @@
         </nav>  
         <main>
             {% block content %}
-<h2>Add Menu Item</h2>
+<h2>Add a reservation</h2>
 <form method="POST" action="{{ url_for('add_reserv') }}">
     <div class="mb-3">
         <label for="costumer_id" class="form-label">Costumer Id</label>
@@ -50,6 +50,7 @@
     <a href="{{ url_for('add_reserv') }}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}
+            <h2>All reservations:</h2>
             <ul>
                 {% for reserv in reservs %}
                 <li>
