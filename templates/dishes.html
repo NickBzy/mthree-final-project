@@ -25,8 +25,10 @@
             <ul>
                 {% for dish in dishes %}
                 <li>
-                    {{dish[2]}}
+                    {{dish[2]}} id= {{dish[0]}}
+                     <a href="{{ url_for('remove_menu_item', item_id=dish[0]) }}">Delete </a>
                 </li>
+                
                 {% endfor %}
             </ul>
         </main>

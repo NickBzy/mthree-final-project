@@ -43,32 +43,28 @@ def add_menu_item():
         menu=request.form.get("menu")
         
         if not name or not price:
-            flash('Name and price are required', 'danger')
             return render_template("add_dishes.html")
         
         try:
             price = float(price)
         except ValueError:
-            flash('Invalid price format', 'danger')
             return render_template("add_dishes.html")
         
         cursor.execute("""
             INSERT INTO dish (name, description, price, category)
             VALUES (%s, %s, %s, %s)
         """, (name, description, price, category))
-        cursor.close()
-        return redirect("/")
+        return redirect("/dishes")
     
     return render_template('add_dishes.html')
 @app.route("/dishes/delete/<int:item_id>")
 def remove_menu_item(item_id):
-    cursor.execute("""SELECT id FROM dish WHERE id = %s""", (item_id,))
+    cursor.execute("""SELECT dish_id FROM dish WHERE dish_id = %s""", (item_id,))
     if not cursor.fetchone():
-            flash('Dish not found', 'danger')
             return redirect("/")
-    cursor.execute("DELETE FROM menu_items WHERE id = %s", (item_id,))
-    flash('Dish deleted successfully', 'success')
-    return redirect("/")
+    cursor.execute("DELETE FROM order_items WHERE dish_id = %s", (item_id,))
+    cursor.execute("DELETE FROM dish WHERE dish_id = %s", (item_id,))
+    return redirect("/dishes")
 
 @app.route("/reservations")
 def reserve():
