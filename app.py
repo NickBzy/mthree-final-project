@@ -107,7 +107,7 @@ def restaurants():
 def resto_dishes(resto_id):
     cursor.execute("SELECT * FROM (dish JOIN menu ON dish.menu_id=menu.menu_id) WHERE menu.restaurant_id=%s", (resto_id,))
     dishes=cursor.fetchall()
-    return render_template("dishes.html",dishes=dishes)
+    return render_template("dishes.html",dishes=dishes, resto_id=resto_id)
 @app.route("/add_restaurant", methods=["POST"])
 def add_restaurant():
     name = request.form.get("name")
