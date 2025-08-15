@@ -172,6 +172,14 @@ main {
     flex: 1;
 }
 
+h2 a {
+  color: var(--green);
+}
+
+h2 a:hover {
+  color: var(--dark-green);
+}
+
 .search-bar {
     padding: 60px 30px 20px;
     display: flex;
